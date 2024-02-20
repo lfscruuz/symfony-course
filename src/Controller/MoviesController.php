@@ -6,19 +6,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class MoviesController extends AbstractController{
-    #[Route('/movies', name: 'movies', methods: ['GET'])]
+    #[Route('/movies/{title}', name:'movie_title', defaults:['title' => null])]
 
-    public function index(): Response{
-        return $this->render('index.html.twig', [
-            'title' => 'Avengers: Endgame'
-        ]);
-    }
+    public function index($title): Response{
+        $movies = ["Avengers: Endgame", "Inception", "Loki", "Black Widow"];
 
-    #[Route('/movies/{name}', name:'movies_name', defaults:['name' => null])]
-    public function show($name): Response{
-        return $this->json([
-            'message' => 'film description',
-            'name' => $name
-        ]);
+        return $this->render('index.html.twig', array(
+            'movies' => $movies,
+        ));
     }
 }
